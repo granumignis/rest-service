@@ -1,0 +1,94 @@
+ The GET request should return a 200 OK response with JSON in the body that represents a greeting. It should resemble the following output:
+
+{
+    "id": 1,
+    "content": "Hello, World!"
+}
+
+The id field is a unique identifier for the greeting, and content is the textual representation of the greeting.
+
+======
+
+Need to make a class to facilitate this
+
+===
+
+When building a REST web service in Spring, HTTP reqeust are handled by a 'controller'.
+
+
+@RestController annotation is used fo rhis.
+
+===
+
+In GreetingController.java, the @GetMapping annotation ensures that /greeting is mapped to the greeting() method
+	See line 16 in GreetingController.java for more
+
+===
+
+@GetMapping has relations like @PostMapping (for POST operations) and @RequestMapping which can function as a synonym for @GetMapping
+
+
+===
+
+@RequestParam (in line 17) binds the value specified ("name" into the 'name' parameter of the 'greeting()' method). Because of the defaultValue argument, if name is absent in the request then 'World' will be used as the name.
+
+==
+
+The stuff in the parens (line 18) is apparently the implementation of the method body. As stated it returns a new object of the Greeting class with the id set by the counter we set up in GreetingController and sets he 'content' for the Greetings object to be a combination of the template variable and the 'name' Parameter we were mentioning in line 17
+
+==
+
+The key difference between an 'mvc' controller and the RESTful service controller is the way the response body is created.
+
+Restful web service controller will populate and return an object instead of relying on server side rendering of the data to html.
+the object is written and sent in JSON instead of html.
+
+
+@RestController is a Spring specific thing. @RestController marks the class as a controller where every method returns a domain object instead of a view. @RestController is shorthand for including @Controller and @ResponseBody
+
+===
+
+Jackson 2 (whichis on the classpath somewhere), will convert the instance of 'Greeting' to JSON
+
+
+
+
+
+@SpringBootApplication is cool because it adds the functionality of these 3 things at once:
+
+	@Configuration
+		Tags this class as a source of bean definitions for the application context
+
+	@EnableAutoConfiguration
+		Tells bean to add beans based on 
+			classpath settings
+			other beans
+			various property settings
+		Example:
+			If spring-webmvc is on the classpath, this annotation:
+				Flags the application as a web application
+				Activates Key Behaviors
+					Example Setting up a DispatcherServlet
+	@ComponentScan
+		will check in com/example package for other stuff
+
+
+
+
+===
+
+The main() method [ see RestServiceApplication.java ] launches the web app .
+
+===
+Note that the main() method uses Spriong Boot's SpringApplication.run() method 
+
+==
+
+I ran into syntax errors with what i tried to do myself
+
+and when i tried to just compile and 'run' the code they sent, it didn't actually create a listener - I feel like I am supposed to put the resulting code into something like tomcat to do the listening and run the code in the right way.
+
+Maybe I missed something in the docs
+
+==
+
